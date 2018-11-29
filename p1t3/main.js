@@ -1,12 +1,12 @@
 /**
- * Rotate a given matrix r times
+ * Rotate a given matrix r times and prints the result
  *
  * @param {Number[]} arr
  * @param {Number} r The number of rotations that we want to perform
  */
 module.exports = function rotate(arr, r) {
     const size = [arr.length, arr[0].length];
-    const rotated = arr.map(x => x.slice());
+    const rotated = arr.map(x => x.slice()); // Copy each array
 
     // Work our way from the outermost rectangle into the innermost one
     for (let i = 0; i < Math.min(...size) / 2; i++) {
