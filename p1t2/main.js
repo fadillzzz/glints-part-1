@@ -66,12 +66,20 @@ function swap(arr) {
         }
     }
 
-    // Only try to swap if there's only two suspected misplaced elements.
-    // Don't bother otherwise as it's most likely unsolvable with one swap operation.
     if (swappables.length === 2) {
         // The element before the firstly suspected one is usually the real culprit
         swappables[0] -= 1;
+    }
 
+    // Potential edge case that might've been been overlooked by the loop
+    // [1, 2, 4, 3, 5, 6]
+    if (swappables.length === 1) {
+        swappables.unshift(swappables[0] - 1);
+    }
+
+    // If there's more than two swappables, don't even bother trying as the result
+    // wouldn't be sorted still.
+    if (swappables.length === 2) {
         const temp = copy[swappables[0]];
         copy[swappables[0]] = copy[swappables[1]];
         copy[swappables[1]] = temp;
@@ -93,7 +101,7 @@ function swap(arr) {
 function reverse(arr) {
     const copy = arr.slice();
     const reversables = [];
-    for (let i = 0; i < arr.length -1; i++) {
+    for (let i = 0; i < arr.length - 1; i++) {
         if (arr[i] > arr[i + 1]) {
             reversables.push(i);
         }
