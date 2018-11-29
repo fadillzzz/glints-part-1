@@ -1,7 +1,7 @@
 /**
  * Given an array, determine whether it can be sorted with one operation or less
  *
- * @param {Number[]}
+ * @param {Number[]} arr
  */
 function swapOrReverse(arr) {
     // Solve base cases that we don't need to worry about at all
@@ -22,6 +22,13 @@ function swapOrReverse(arr) {
         console.log('yes');
         // Adds 1 to each element because the index is supposed to start from 1
         console.log('swap ' + swappables.map(x => x + 1).join(' '));
+        return;
+    }
+
+    const reversables = reverse(arr);
+    if (reversables.length > 0) {
+        console.log('yes');
+        console.log('reverse ' + reversables.map(x => x + 1).join(' '));
         return;
     }
 
@@ -75,4 +82,57 @@ function swap(arr) {
     }
 
     return [];
+}
+
+/**
+ * Finds a possible sub array that can be reversed to sort the given array
+ *
+ * @param {Number[]} arr
+ * @return {Number[]}
+ */
+function reverse(arr) {
+    const copy = arr.slice();
+    const reversables = [];
+    for (let i = 0; i < arr.length -1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            reversables.push(i);
+        }
+    }
+
+    if (reversables.length > 0) {
+        // The last element that was marked as part of the reversable sub array
+        // is most likely a part of it.
+        reversables.push(reversables[reversables.length - 1] + 1);
+
+        if (isSequential(reversables)) {
+            const start = Math.min(...reversables);
+            const end = Math.max(...reversables);
+
+            copy.splice(start, reversables.length, ...copy.slice(start, end + 1).reverse());
+
+            if (isInOrder(copy)) {
+                return [start, end];
+            }
+        }
+    }
+
+    return [];
+}
+
+/**
+ * Checks if the given array contains a series of sequential number by one increment
+ *
+ * @param {Number[]} arr
+ * @return {Boolean}
+ */
+function isSequential(arr) {
+    const initial = arr[0];
+
+    for (let i = 1; i < arr.length; i++) {
+        if (initial + i !== arr[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
