@@ -1,6 +1,12 @@
 const BigNumber = require('bignumber.js');
 
-function fact(x) {
+/**
+ * Given an integer, calculate the factorial value and return it
+ *
+ * @param {Number} x
+ * @return {String}
+ */
+module.exports = function fact(x) {
     if (x == 1) {
         return 1;
     }

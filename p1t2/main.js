@@ -3,7 +3,7 @@
  *
  * @param {Number[]} arr
  */
-function swapOrReverse(arr) {
+module.exports = function swapOrReverse(arr) {
     // Solve base cases that we don't need to worry about at all
     if (isInOrder(arr)) {
         console.log('yes');
